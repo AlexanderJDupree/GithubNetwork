@@ -13,6 +13,7 @@ jobs:
         - run:
             name: Run Unit Tests
             command: python -m unittest -v
-        - run: Test service
+        - run: 
+          name: Test service
           command: python runner.py alexanderjdupree
             
