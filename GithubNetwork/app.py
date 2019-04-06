@@ -15,11 +15,16 @@ __version__   = "0.0.1-alpha"
 __status__    = "Development"
 
 from os import sys
-from .helpers import cmdParser 
+from .helpers import cmdParser, GitHubAPI
 
 def main():
 
-    print(cmdParser.parse(sys.argv[1:]))
+    args = cmdParser.parse(sys.argv[1:])
+
+    user = GitHubAPI.getUser(args['user'])
+
+    print(user)
+
     return 0
 
 
