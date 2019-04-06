@@ -24,3 +24,15 @@ class User:
     def followers(self):
         return [data['login'] for data in self._followers]
 
+    def __repr__(self):
+        return "login: " + self.login() + " id: " + str(self.id())
+
+    def __str__(self):
+        return self.__repr__()
+
+    def __eq__(self, other):
+        return self.id() == other.id()
+
+    def __hash__(self):
+        return self.id()
+
