@@ -9,11 +9,14 @@ jobs:
         - checkout
         - run:
             name: Install Dependencies
-            command: pip install -r requirements.txt
+            command: |
+                pip install -r requirements.txt
         - run:
             name: Run Unit Tests
-            command: python -m unittest -v
+            command: |
+                python -m unittest -v
         - run: 
           name: Test service
-          command: python runner.py alexanderjdupree
+          command: |
+              python runner.py alexanderjdupree
             
