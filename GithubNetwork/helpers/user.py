@@ -22,13 +22,16 @@ class User:
         return self._data['id']
 
     def followers(self):
-        return [data['login'] for data in self._followers]
+        return [follower['login'] for follower in self._followers]
+
+    def following(self):
+        return [following['login'] for following in self._following]
 
     def __repr__(self):
         return "login: " + self.login() + " id: " + str(self.id())
 
     def __str__(self):
-        return self.__repr__()
+        return self.login()
 
     def __eq__(self, other):
         return self.id() == other.id()
