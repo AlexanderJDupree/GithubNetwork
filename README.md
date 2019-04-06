@@ -2,6 +2,7 @@
 
 Visualize your GitHub social network as a graph!
 
+[![CircleCI](https://circleci.com/gh/AlexanderJDupree/GithubNetwork.svg?style=svg)](https://circleci.com/gh/AlexanderJDupree/GithubNetwork)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AlexanderJDupree/GitHubNetwork/blob/master/LICENSE)
 
 ## Introduction
