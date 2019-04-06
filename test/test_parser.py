@@ -3,7 +3,7 @@ file: test_parser.py
 
 brief: Unit tests for GithubNetwork command line parser
 
-https://github.com/AlexanderJDupree/github-network
+https://github.com/AlexanderJDupree/GitHubNetwork
 '''
 
 import argparse
