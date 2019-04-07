@@ -57,7 +57,7 @@ class Graph:
 
     # TODO parameterize file type
     def write(self, output_file):
-        nx.write_graphml_lxml(self._graph, output_file + ".graphml")
+        nx.write_graphml_xml(self._graph, output_file + ".graphml")
 
     def mapNetwork(self, username):
 
