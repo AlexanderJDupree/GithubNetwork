@@ -9,7 +9,7 @@ https://github.com/AlexanderJDupree/GithubNetwork
 import argparse
 
 VIS_LAYOUTS = ['circular', 'kamada-kawai', 'random', 
-               'spectral', 'spring', 'shell', 'bipartite']
+               'spectral', 'spring', 'shell']
 
 def validateInteger(arg, lbound, ubound):
     value = int(arg)

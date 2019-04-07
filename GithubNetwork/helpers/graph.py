@@ -21,7 +21,6 @@ class Graph:
             'spring'       : nx.spring_layout,
             'circular'     : nx.circular_layout,
             'spectral'     : nx.spectral_layout,
-            'bipartite'    : nx.bipartite_layout,
             'kamada-kawai' : nx.kamada_kawai_layout
             }
     
