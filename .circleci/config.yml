@@ -15,5 +15,5 @@ jobs:
             command: 'python -m unittest -v'
         - run: 
             name: Test service
-            command: 'python runner.py alexanderjdupree'
+            command: 'python runner.py alexanderjdupree -d 3 -m 30'
             

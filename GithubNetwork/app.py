@@ -15,16 +15,21 @@ __version__   = "0.0.1-alpha"
 __status__    = "Development"
 
 from os import sys
-from .helpers import cmdParser, GitHubAPI
+from .helpers import cmdParser, GitHubAPI as API
+from .helpers.graph import Graph
 
 def main():
 
     args = cmdParser.parse(sys.argv[1:])
 
-    user = GitHubAPI.getUser(args['user'])
+    graph = Graph(args['diameter'], args['max'])
 
-    print(user)
+    graph.mapNetwork(args['user'])
+
+    graph.draw(args['output'], args['arrowsize'], args['scale'], args['width'],
+               args['normalize'], args['colored'], args['labels'], args['vis'])
+
+    graph.write(args['output'].split('.')[0])
 
     return 0
-
 
