@@ -43,7 +43,7 @@ def parse(argv):
     parser = argparse.ArgumentParser(
             description="Visualize your your GitHub social network!"
             )
-    parser.add_argument(
+    parser.add_argument( # TODO make username optional
             'user',
             metavar='USERNAME',
             help="<USERNAME> of a Github profile"
@@ -53,28 +53,28 @@ def parse(argv):
             type=validateDiameter,
             metavar='',
             default=5,
-            help="<NUMBER> length of the longest shortest path from the user"
+            help="<NUMBER> length of the longest shortest path from the user. Default=5"
             )
     parser.add_argument(
             '-m', '--max',
             type=validateMaxNodes,
             metavar='',
             default=500,
-            help="max <NUMBER> of nodes in the graph"
+            help="max <NUMBER> of nodes in the graph. Default=500"
             )
     parser.add_argument(
             '-v', '--vis',
             choices=VIS_LAYOUTS,
             metavar='',
             default='spring',
-            help="Graph visualization <LAYOUT>. Layouts are \n\t{}".format(
+            help="Graph visualization <LAYOUT>. Default=spring. Layouts are \n\t{}".format(
                 '\n\t'.join(VIS_LAYOUTS))
             )
     parser.add_argument(
             '-o', '--output',
             metavar='',
             default='network.png',
-            help='Desired <FILE NAME> of output'
+            help='Desired <FILE NAME> of output. Default=network.png'
             )
     parser.add_argument(
             '-l', '--labels',
@@ -87,14 +87,14 @@ def parse(argv):
             type=validateArrowSize,
             metavar='',
             default=10,
-            help="Specify size of arrows. <NUMBER>"
+            help="Specify size of arrows. <NUMBER>. Default=10"
             )
     parser.add_argument(
             '-s', '--scale',
             type=float,
             metavar='',
             default=1.0,
-            help="Scale the size of each nodes. <FLOAT>"
+            help="Scale the size of each nodes. <FLOAT>. Default=1.0"
             )
     parser.add_argument(
             '-n', '--normalize',
@@ -113,7 +113,13 @@ def parse(argv):
             type=float,
             metavar='',
             default=1.0,
-            help="Width of edge lines <FLOAT>"
+            help="Width of edge lines <FLOAT>. Default=1.0"
+            )
+    parser.add_argument(
+            '-r', '--read',
+            metavar='',
+            default=None,
+            help="Read a <GRAPHML FILE> instead of polling GitHubAPI. Default=None"
             )
 
     #TODO Add figsize tuple argument

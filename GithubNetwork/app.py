@@ -24,7 +24,11 @@ def main():
 
     graph = Graph(args['diameter'], args['max'])
 
-    graph.mapNetwork(args['user'])
+    # TODO provide updates and progress bars
+    if args['read']:
+        graph.read(args['read'])
+    else:
+        graph.mapNetwork(args['user'])
 
     graph.draw(args['output'], args['arrowsize'], args['scale'], args['width'],
                args['normalize'], args['colored'], args['labels'], args['vis'])
@@ -32,4 +36,3 @@ def main():
     graph.write(args['output'].split('.')[0])
 
     return 0
-

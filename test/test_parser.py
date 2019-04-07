@@ -14,7 +14,7 @@ class TestCommandParser(unittest.TestCase):
 
     ''' Command line options '''
     options = ['user','diameter', 'max', 'vis', 'output', 'labels', 
-               'arrowsize', 'scale', 'normalize', 'colored', 'width']
+               'arrowsize', 'scale', 'normalize', 'colored', 'width', 'read']
 
     longopts = [ '{}{}'.format('--', option) for option in options ]
     shortopts = [ '{}{}'.format('-', option[0]) for option in options ]
@@ -34,7 +34,7 @@ class TestCommandParser(unittest.TestCase):
     def testDefaultOptions(self):
         ''' Test the parser returns the default options when none are provided'''
         defaultVals = [
-                'USER', 5, 500, 'spring', 'network.png', False, 10, 1.0, False, True, 1.0
+                'USER', 5, 500, 'spring', 'network.png', False, 10, 1.0, False, True, 1.0, None
                 ]
         expectedDict = dict(zip(self.options, defaultVals))
 

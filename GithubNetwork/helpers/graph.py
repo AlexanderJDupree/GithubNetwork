@@ -55,9 +55,13 @@ class Graph:
     def _betCent(self):
         return nx.betweenness_centrality(self._graph, endpoints=True)
 
-    # TODO parameterize file type
+    # TODO parameterize file types
     def write(self, output_file):
         nx.write_graphml_xml(self._graph, output_file + ".graphml")
+
+    def read(self, input_file):
+        self._graph = nx.read_graphml(input_file)
+        return
 
     def mapNetwork(self, username):
 
@@ -72,6 +76,7 @@ class Graph:
             user = getUser(username)
             self.__mapNetwork(user, depth - 1)
         except HTTPError:
+            #TODO Set option to log failed usernames
             return
 
     # TODO clean up and optimize
