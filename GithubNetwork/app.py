@@ -16,33 +16,20 @@ __status__    = "Development"
 
 from os import sys
 from .helpers import cmdParser, GitHubAPI as API
+from .helpers.graph import Graph
 
 def main():
 
     args = cmdParser.parse(sys.argv[1:])
 
-    user = API.getUser(args['user'])
+    graph = Graph(args['diameter'], args['max'])
 
-    graph = nx.DiGraph()
+    graph.mapNetwork(args['user'])
 
-    for follower in user.followers():
-        graph.add_edge(follower, user.login())
+    graph.draw(args['output'], args['arrowsize'], args['scale'], args['width'],
+               args['normalize'], args['colored'], args['labels'], args['vis'])
 
-    for username in user.following():
-        graph.add_edge(user.login(), username)
-
-    pos = nx.spectral_layout(graph)
-
-    betCent = nx.betweenness_centrality(graph, normalized=True, endpoints=True)
-
-    node_color = [20000.0 * graph.degree(v) for v in graph]
-    node_size =  [v * 15000 for v in betCent.values()]
-
-    plt.figure(figsize=(15, 15))
-    nx.draw_networkx(graph, pos, node_color=node_color, node_size=node_size, cmap=plt.cm.coolwarm, arrowsize=20, font_weight='bold')
-
-    plt.axis('off')
-    plt.savefig("test.png", format="PNG")
+    graph.write(args['output'].split('.')[0])
 
     return 0
 

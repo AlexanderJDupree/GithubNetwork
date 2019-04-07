@@ -7,13 +7,15 @@ brief: Constructs the graph from the GithubAPI and utilizes networkx and
 https://github.com/AlexanderJDupree/GithubNetwork
 '''
 
+import multiprocessing
 import networkx as nx
-import GitHubAPI as API
-import matplotlib.pylot as plt
+import matplotlib.pyplot as plt
+from requests.exceptions import HTTPError
+from .GitHubAPI import *
 
 class Graph:
 
-    layouts = {
+    _layouts = {
             'shell'        : nx.shell_layout,
             'random'       : nx.random_layout,
             'spring'       : nx.spring_layout,
@@ -22,34 +24,85 @@ class Graph:
             'bipartite'    : nx.bipartite_layout,
             'kamada-kawai' : nx.kamada_kawai_layout
             }
+    
+    def __init__(self, diameter, maxNodes):
+        self._diameter  = diameter
+        self._maxNodes  = maxNodes
+        self._graph     = nx.DiGraph()
 
-    def __init__(diameter, maxNodes, layout, figsize=(20,20)):
-        self._diameter = diameter
-        self._maxNodes = maxNodes
-        self._layout   = layout
-        self._figsize  = figsize
-        self._graph    = nx.DiGraph()
+    def draw(self, output_file, arrowsize=10, scale=1.0, width=1.0, 
+             normalize=False, colored=True, labels=True, layout='spring'):
 
-    def drawNetwork(self, username):
-        user_main = API.getUser(username)
+        pos = self._layouts[layout](self._graph)
 
-        self._crawlNetwork(user_main, self._diameter)
+        node_color = self._nodeColor(colored)
+        node_size = self._nodeSize(normalize, scale)
 
-    def _crawlNetwork(self, user, depth):
-        if depth <= 0:
+        # TODO parameterize figsize
+        plt.figure(figsize=(20, 20))
+        nx.draw_networkx(self._graph, pos, node_color=node_color, node_size=node_size, 
+                         with_labels=labels, arrowsize=arrowsize, width=width)
+
+        plt.axis('off')
+        plt.savefig(output_file, format="PNG")
+        return
+
+    def _nodeColor(self, colored):
+        return [20000.0 * self._graph.degree(v) for v in self._graph] if colored else 'r'
+
+    def _nodeSize(self, normalize, scale):
+        return int(300 * scale) if normalize else [v * 10100 for v in self._betCent().values()]
+
+    def _betCent(self):
+        return nx.betweenness_centrality(self._graph, endpoints=True)
+
+    # TODO parameterize file type
+    def write(self, output_file):
+        nx.write_graphml_lxml(self._graph, output_file + ".graphml")
+
+    def mapNetwork(self, username):
+
+        self._mapNetwork(username, self._diameter)
+        return
+
+    def _mapNetwork(self, username, depth):
+        if depth <= 0 or self._graph.number_of_nodes() >= self._maxNodes:
+            return 
+
+        try:
+            user = getUser(username)
+            self.__mapNetwork(user, depth - 1)
+        except HTTPError:
             return
 
-        for follower in user.followers():
-            self._graph.add_edge(follower, user.login())
-            self._crawlNetwork(API.getUser(follower), depth - 1)
+    # TODO clean up and optimize
+    def __mapNetwork(self, user, depth):
 
-        for following in user.following():
-            self._graph.add_edge(user.login(), following)
-            self._crawlNetwork(API.getUser(following), depth - 1)
+        followers = user.followers()
+        following = user.following()
+        union = set(followers).union(following)
 
+        edge_list = zip(followers, [user.login() for i in range(len(followers))])
 
+        self._graph.add_edges_from(edge_list)
 
+        edge_list = zip([user.login() for i in range(len(following))], following)
 
+        self._graph.add_edges_from(edge_list)
 
-
+        # Only instantiate processes for first level of recursion
+        if(depth == self._diameter):
+            # TODO review number of processes to use
+            # Taks and chunksize are limited to 1 to free memory after each recursive branch
+            with multiprocessing.Pool(processes=4, maxtasksperchild=1) as pool:
+                # starmap unpacks the union and depth as key, value pairs
+                pool.starmap(self._mapNetwork, 
+                             zip(union, [depth for i in range(len(union))]),
+                             chunksize=1)
+                pool.close()
+                pool.join()
+        else:
+            for user in union:
+                self._mapNetwork(user, depth)
+        return
 
