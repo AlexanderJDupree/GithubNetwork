@@ -13,7 +13,9 @@ from GithubNetwork.helpers import cmdParser as parser
 class TestCommandParser(unittest.TestCase):
 
     ''' Command line options '''
-    options = ['user','diameter', 'max', 'vis', 'output']
+    options = ['user','diameter', 'max', 'vis', 'output', 'labels', 
+               'arrowsize', 'scale', 'normalize', 'colored', 'width']
+
     longopts = [ '{}{}'.format('--', option) for option in options ]
     shortopts = [ '{}{}'.format('-', option[0]) for option in options ]
 
@@ -31,7 +33,10 @@ class TestCommandParser(unittest.TestCase):
 
     def testDefaultOptions(self):
         ''' Test the parser returns the default options when none are provided'''
-        expectedDict = dict(zip(self.options, ['USER', 5,  200, 'kamada-kawai', 'network.png' ]))
+        defaultVals = [
+                'USER', 5, 500, 'spring', 'network.png', False, 10, 1.0, False, True, 1.0
+                ]
+        expectedDict = dict(zip(self.options, defaultVals))
 
         self.assertEqual(expectedDict, parser.parse(['USER']))
 
