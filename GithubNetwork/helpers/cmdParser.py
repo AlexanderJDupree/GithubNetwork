@@ -8,8 +8,10 @@ https://github.com/AlexanderJDupree/GithubNetwork
 
 import argparse
 
-VIS_LAYOUTS = ['circular', 'kamada-kawai', 'random', 
-               'spectral', 'spring', 'shell']
+VIS_LAYOUTS = ['spring', 'kamada-kawai', 'random', 
+               'spectral', 'circular', 'shell']
+
+FILE_FORMATS = [ 'graphml', 'pickle', 'adjacency_list', 'gexf', 'yaml', 'edge_list' ]
 
 def validateInteger(arg, lbound, ubound):
     value = int(arg)
@@ -27,15 +29,6 @@ def validateMaxNodes(arg):
 
 def validateArrowSize(arg):
     return validateInteger(arg, 1, 20)
-
-def validateVisualization(arg):
-    if arg in VIS_LAYOUTS:
-        return arg
-    else:
-        raise argparse.ArgumentTypeError(
-                '{} is not an accepted layout. Accepted layouts are: \n\t{}'.format(
-                    arg, '\n\t'.join(VIS_LAYOUTS))
-                )
 
 def parse(argv):
 
@@ -65,9 +58,9 @@ def parse(argv):
             '-v', '--vis',
             choices=VIS_LAYOUTS,
             metavar='',
-            default='spring',
-            help="Graph visualization <LAYOUT>. Default=spring. Layouts are \n\t{}".format(
-                '\n\t'.join(VIS_LAYOUTS))
+            default=VIS_LAYOUTS[0],
+            help="Graph visualization <LAYOUT>. Default={}. Layouts are \n\t{}".format(
+                VIS_LAYOUTS[0], '\n\t'.join(VIS_LAYOUTS))
             )
     parser.add_argument(
             '-o', '--output',
@@ -132,6 +125,13 @@ def parse(argv):
             default=False,
             help="Display graphs x/y axis. Default=False"
             )
+    parser.add_argument(
+            '--format',
+            choices=FILE_FORMATS,
+            default=FILE_FORMATS[0],
+            help="Graph output file format. Default={}.".format(
+                FILE_FORMATS[0]
+            ))
 
     # Returns a dict object
     return vars(parser.parse_args(argv))
