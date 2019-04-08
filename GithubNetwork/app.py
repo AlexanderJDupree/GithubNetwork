@@ -16,13 +16,13 @@ __status__    = "Development"
 
 from os import sys
 from .helpers import cmdParser, GitHubAPI as API
-from .helpers.graph import Graph
+from .helpers.graph import GitHubNetwork
 
 def main():
 
     args = cmdParser.parse(sys.argv[1:])
 
-    graph = Graph(args['diameter'], args['max'])
+    graph = GitHubNetwork(args['diameter'], args['max'])
 
     graph.mapNetwork(args['user'])
 

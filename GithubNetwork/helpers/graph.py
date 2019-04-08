@@ -13,10 +13,11 @@ mpl.use('Agg')
 # Tk backend does not seem to be as prevalent as Agg backend
 
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 from requests.exceptions import HTTPError
 from .GitHubAPI import *
 
-class Graph:
+class GitHubNetwork:
 
     _layouts = {
             'shell'        : nx.shell_layout,
@@ -74,8 +75,6 @@ class Graph:
 
         self._mapNetwork(user, self._diameter)
 
-        print(self._processed)
-
         # Empty hash set of processed data
         self._processed.clear()
         return
@@ -92,17 +91,17 @@ class Graph:
 
         self._processed.add(user)
 
-        for user in union:
+        for user in tqdm(union, desc="Mapping {}".format(user.login())):
             self._mapNetwork(user, depth - 1)
         return
 
     def _addFollowers(self, user):
-        for follower in user.followers():
+        for follower in tqdm(user.followers(), desc="Writing {} followers to graph".format(user.login())):
             self._graph.add_edge(follower, user)
         return
 
     def _addFollowing(self, user):
-        for following in user.following():
+        for following in tqdm(user.following(), desc="Writing {} following to graph".format(user.login())):
             self._graph.add_edge(user, following)
         return
 
