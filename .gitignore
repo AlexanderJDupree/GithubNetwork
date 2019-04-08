@@ -1,6 +1,7 @@
-
+# Generated python and pip files
 __pycache__/
 *.egg-info/
 
+# GitHubNetwork output files
 *.png
 *.graphml
