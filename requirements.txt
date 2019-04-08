@@ -3,3 +3,5 @@ requests
 networkx
 numpy
 tqdm
+PyYAML
+
