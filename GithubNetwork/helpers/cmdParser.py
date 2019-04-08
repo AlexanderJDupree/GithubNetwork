@@ -97,12 +97,14 @@ def parse(argv):
             )
     parser.add_argument(
             '-n', '--normalize',
+            type=bool,
             metavar='', 
             default=False,
             help="Normalize the size of each node. Default=False"
             )
     parser.add_argument(
             '-c', '--colored',
+            type=bool,
             metavar='',
             default=True,
             help="Scale colors by betweeness centrality factor. Default=True"
@@ -113,6 +115,22 @@ def parse(argv):
             metavar='',
             default=1.0,
             help="Width of edge lines <FLOAT>. Default=1.0"
+            )
+    parser.add_argument(
+            '-f', '--figsize',
+            type=int,
+            nargs=2,
+            metavar='',
+            choices=range(1, 100),
+            default=(20,20),
+            help="Figure size tuple: (<WIDTH>,<HEIGHT>), default=(20,20)"
+            )
+    parser.add_argument(
+            '-x', '--axis',
+            type=bool,
+            metavar='',
+            default=False,
+            help="Display graphs x/y axis. Default=False"
             )
 
     # Returns a dict object

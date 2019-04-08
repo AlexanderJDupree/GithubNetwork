@@ -11,7 +11,7 @@ https://github.com/AlexanderJDupree/GithubNetwork
 __author__    = "Alexander DuPree"
 __copyright__ = "Copyright (c) 2019 Alexander DuPree"
 __license__   = "MIT"
-__version__   = "0.0.1-alpha"
+__version__   = "1.0.0a"
 __status__    = "Development"
 
 from os import sys
@@ -26,9 +26,20 @@ def main():
 
     graph.mapNetwork(args['user'])
 
-    graph.draw(args['output'], args['arrowsize'], args['scale'], args['width'],
-               args['normalize'], args['colored'], args['labels'], args['vis'])
+    graph.draw(
+            output_file = args['output'], 
+            arrowsize   = args['arrowsize'], 
+            scale       = args['scale'], 
+            width       = args['width'],
+            normalize   = args['normalize'], 
+            colored     = args['colored'], 
+            labels      = args['labels'], 
+            layout      = args['vis'],
+            axis        = args['axis'],
+            figsize     = args['figsize']
+            )
 
+    # Remove file extension if provided
     graph.write(args['output'].split('.')[0])
 
     return 0

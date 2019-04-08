@@ -8,9 +8,9 @@ https://github.com/AlexanderJDupree/GithubNetwork
 '''
 
 import networkx as nx
+
 import matplotlib as mpl
-mpl.use('Agg')
-# Tk backend does not seem to be as prevalent as Agg backend
+mpl.use('Agg') # Tk backend does not seem to be as prevalent as Agg backend
 
 import matplotlib.pyplot as plt
 from tqdm import tqdm
@@ -34,22 +34,22 @@ class GitHubNetwork:
         self._graph     = nx.DiGraph()
         self._processed = set()
 
-    def draw(self, output_file, arrowsize=10, scale=1.0, width=1.0, 
-             normalize=False, colored=True, labels=True, layout='spring'):
+    def draw(self, output_file, arrowsize=10, scale=1.0, width=1.0, figsize=(20, 20),
+             normalize=False, colored=True, labels=True, axis=False, layout='spring'):
 
         pos = self._layouts[layout](self._graph)
 
         node_color = self._nodeColor(colored)
         node_size = self._nodeSize(normalize, scale)
 
-        # TODO parameterize figsize
-        plt.figure(figsize=(20, 20))
+        plt.figure(figsize=figsize)
 
         nx.draw_networkx(self._graph, pos, node_color=node_color, node_size=node_size, 
                          with_labels=labels, arrowsize=arrowsize, width=width)
 
-        # TODO parameterize
-        plt.axis('off')
+        if(axis == False):
+            plt.axis('off')
+
         plt.savefig(output_file, format="PNG")
         return
 
@@ -74,6 +74,8 @@ class GitHubNetwork:
             return #TODO helpful error message
 
         self._mapNetwork(user, self._diameter)
+	
+        print(self._processed)
 
         # Empty hash set of processed data
         self._processed.clear()
