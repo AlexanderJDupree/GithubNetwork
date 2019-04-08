@@ -27,6 +27,14 @@ class GitHubNetwork:
             'spectral'     : nx.spectral_layout,
             'kamada-kawai' : nx.kamada_kawai_layout
             }
+    _formats = {
+            'graphml'        : (nx.write_graphml_xml, '.graphml'),
+            'adjacency_list' : (nx.write_adjlist, '.adjlist'),
+            'edge_list'      : (nx.write_edgelist, '.edgelist'),
+            'pickle'         : (nx.write_gpickle, '.gpickle'),
+            'yaml'           : (nx.write_yaml, '.yaml'),
+            'gexf'           : (nx.write_gexf, '.gexf')
+            }
     
     def __init__(self, diameter, maxNodes):
         self._diameter  = diameter
@@ -63,8 +71,12 @@ class GitHubNetwork:
         return nx.betweenness_centrality(self._graph, endpoints=True)
 
     # TODO parameterize file type and add different output types
-    def write(self, output_file):
-        nx.write_graphml_xml(self._graph, output_file + ".graphml")
+    def write(self, output_file, file_format):
+        # Function and extension lookup
+        nx_write  = self._formats[file_format][0]
+        extension = self._formats[file_format][1]
+
+        nx_write(self._graph, output_file + extension)
 
     def mapNetwork(self, username):
 
@@ -75,8 +87,6 @@ class GitHubNetwork:
 
         self._mapNetwork(user, self._diameter)
 	
-        print(self._processed)
-
         # Empty hash set of processed data
         self._processed.clear()
         return

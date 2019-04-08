@@ -15,7 +15,7 @@ class TestCommandParser(unittest.TestCase):
     ''' Command line options '''
     options = ['user','diameter', 'max', 'vis', 'output', 'labels', 
                'arrowsize', 'scale', 'normalize', 'colored', 'width',
-               'figsize', 'axis']
+               'figsize', 'axis', 'format']
 
     longopts = [ '{}{}'.format('--', option) for option in options ]
     shortopts = [ '{}{}'.format('-', option[0]) for option in options ]
@@ -36,7 +36,7 @@ class TestCommandParser(unittest.TestCase):
         ''' Test the parser returns the default options when none are provided'''
         defaultVals = [
                 'USER', 5, 500, 'spring', 'network.png', False, 10, 1.0, False, True, 1.0,
-                (20, 20), False
+                (20, 20), False, 'graphml'
                 ]
         expectedDict = dict(zip(self.options, defaultVals))
 

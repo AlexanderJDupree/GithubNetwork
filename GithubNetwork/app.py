@@ -40,7 +40,7 @@ def main():
             )
 
     # Remove file extension if provided
-    graph.write(args['output'].split('.')[0])
+    graph.write(args['output'].split('.')[0], args['format'])
 
     return 0
 
