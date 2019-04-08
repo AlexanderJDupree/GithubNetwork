@@ -7,8 +7,11 @@ brief: Constructs the graph from the GithubAPI and utilizes networkx and
 https://github.com/AlexanderJDupree/GithubNetwork
 '''
 
-import multiprocessing
 import networkx as nx
+import matplotlib as mpl
+mpl.use('Agg')
+# Tk backend does not seem to be as prevalent as Agg backend
+
 import matplotlib.pyplot as plt
 from requests.exceptions import HTTPError
 from .GitHubAPI import *
@@ -28,6 +31,7 @@ class Graph:
         self._diameter  = diameter
         self._maxNodes  = maxNodes
         self._graph     = nx.DiGraph()
+        self._processed = set()
 
     def draw(self, output_file, arrowsize=10, scale=1.0, width=1.0, 
              normalize=False, colored=True, labels=True, layout='spring'):
@@ -39,9 +43,11 @@ class Graph:
 
         # TODO parameterize figsize
         plt.figure(figsize=(20, 20))
+
         nx.draw_networkx(self._graph, pos, node_color=node_color, node_size=node_size, 
                          with_labels=labels, arrowsize=arrowsize, width=width)
 
+        # TODO parameterize
         plt.axis('off')
         plt.savefig(output_file, format="PNG")
         return
@@ -55,53 +61,48 @@ class Graph:
     def _betCent(self):
         return nx.betweenness_centrality(self._graph, endpoints=True)
 
-    # TODO parameterize file type
+    # TODO parameterize file type and add different output types
     def write(self, output_file):
         nx.write_graphml_xml(self._graph, output_file + ".graphml")
 
     def mapNetwork(self, username):
 
-        self._mapNetwork(username, self._diameter)
-        return
-
-    def _mapNetwork(self, username, depth):
-        if depth <= 0 or self._graph.number_of_nodes() >= self._maxNodes:
-            return 
-
         try:
             user = getUser(username)
-            self.__mapNetwork(user, depth - 1)
         except HTTPError:
-            return
+            return #TODO helpful error message
 
-    # TODO clean up and optimize
-    def __mapNetwork(self, user, depth):
+        self._mapNetwork(user, self._diameter)
 
-        followers = user.followers()
-        following = user.following()
-        union = set(followers).union(following)
+        print(self._processed)
 
-        edge_list = zip(followers, [user.login() for i in range(len(followers))])
+        # Empty hash set of processed data
+        self._processed.clear()
+        return
 
-        self._graph.add_edges_from(edge_list)
+    def _mapNetwork(self, user, depth):
 
-        edge_list = zip([user.login() for i in range(len(following))], following)
+        if depth <= 0 or self._graph.number_of_nodes() >= self._maxNodes or user in self._processed:
+            return 
 
-        self._graph.add_edges_from(edge_list)
+        self._addFollowers(user)
+        self._addFollowing(user)
 
-        # Only instantiate processes for first level of recursion
-        if(depth == self._diameter):
-            # TODO review number of processes to use
-            # Taks and chunksize are limited to 1 to free memory after each recursive branch
-            with multiprocessing.Pool(processes=4, maxtasksperchild=1) as pool:
-                # starmap unpacks the union and depth as key, value pairs
-                pool.starmap(self._mapNetwork, 
-                             zip(union, [depth for i in range(len(union))]),
-                             chunksize=1)
-                pool.close()
-                pool.join()
-        else:
-            for user in union:
-                self._mapNetwork(user, depth)
+        union = set(user.followers()).union(user.following())
+
+        self._processed.add(user)
+
+        for user in union:
+            self._mapNetwork(user, depth - 1)
+        return
+
+    def _addFollowers(self, user):
+        for follower in user.followers():
+            self._graph.add_edge(follower, user)
+        return
+
+    def _addFollowing(self, user):
+        for following in user.following():
+            self._graph.add_edge(user, following)
         return
 
