@@ -66,24 +66,24 @@ github-network --help
 
 Here are a couple of examples with my GitHub profile and the resulting images:
 
-Here I am specifying a diameter of 6 with the max number of nodes to be 60, arranged in a circle with corresponding labels. 
+Here I am specifying the max number of nodes to be 45, arranged randomly, colored with the coolwarm colormap, with the axis displayed, and with each node labeled with the username. 
 
 ```
-github-network alexanderjdupree -d 6 -m 60 -v circular --labels=true
+github-network alexanderjdupree -m 45 -v random -c coolwarm --labels=true --axis=true
 ```
 This command generated this image:
 
-![Circular layout with 60 Nodes](example/circular.png)
+![Circular layout with 60 Nodes](example/random.png)
 
-Heres another example for 1000 nodes, an arrowsize of 5, line width of 70%, a figure size of 30 by 25, and uses the default 'spring' layout.
+Heres another example for 1000 nodes, an arrowsize of 5, line width of 60%, node sizes normalized, a figure size of 30 by 25, arranged by the kamada-kawai algorithm, with a color bar added for the twilight colormap.
 
 ```
-github-network alexanderjdupree -d 6 -m 1000 --arrowsize=5 --width=.7 -f 30 25
+github-network alexanderjdupree  -d 6 -m 1000 -v kamada-kawai -c twilight --arrowsize=5 --bar=true --normalize=true --width=.6 -f 30 25
 ```
 
 Which results in this image:
 
-![Spring layout with 1000 Nodes](example/spring.png)
+![Spring layout with 1000 Nodes](example/kamada.png)
 
 As you can see, things can get messy very quick! That's why that along with the .png file the graph itself can be saved in a variety of formats. By default it is saved as 'network.graphml' and can be used in other visualization and analysis tools of your choosing. 
 
