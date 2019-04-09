@@ -15,7 +15,7 @@ __version__   = "1.0.0a"
 __status__    = "Development"
 
 from os import sys
-from .helpers import cmdParser, GitHubAPI as API
+from .helpers import cmdParser
 from .helpers.graph import GitHubNetwork
 
 def main():
