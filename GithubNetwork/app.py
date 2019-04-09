@@ -27,13 +27,13 @@ def main():
     graph.mapNetwork(args['user'])
 
     graph.draw(
-            output_file = args['output'], 
-            arrowsize   = args['arrowsize'], 
-            scale       = args['scale'], 
+            output_file = args['output'],
+            arrowsize   = args['arrowsize'],
+            scale       = args['scale'],
             width       = args['width'],
-            normalize   = args['normalize'], 
-            colored     = args['colored'], 
-            labels      = args['labels'], 
+            normalize   = args['normalize'],
+            colored     = args['colored'],
+            labels      = args['labels'],
             layout      = args['vis'],
             axis        = args['axis'],
             figsize     = args['figsize']

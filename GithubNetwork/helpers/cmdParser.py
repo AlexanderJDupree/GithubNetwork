@@ -8,8 +8,7 @@ https://github.com/AlexanderJDupree/GithubNetwork
 
 import argparse
 
-VIS_LAYOUTS = ['spring', 'kamada-kawai', 'random', 
-               'spectral', 'circular', 'shell']
+VIS_LAYOUTS = ['spring', 'kamada-kawai', 'random', 'spectral', 'circular', 'shell']
 
 FILE_FORMATS = [ 'graphml', 'pickle', 'adjacency_list', 'gexf', 'yaml', 'edge_list' ]
 
@@ -91,7 +90,7 @@ def parse(argv):
     parser.add_argument(
             '-n', '--normalize',
             type=bool,
-            metavar='', 
+            metavar='',
             default=False,
             help="Normalize the size of each node. Default=False"
             )

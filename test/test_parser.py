@@ -13,7 +13,7 @@ from GithubNetwork.helpers import cmdParser as parser
 class TestCommandParser(unittest.TestCase):
 
     ''' Command line options '''
-    options = ['user','diameter', 'max', 'vis', 'output', 'labels', 
+    options = ['user','diameter', 'max', 'vis', 'output', 'labels',
                'arrowsize', 'scale', 'normalize', 'colored', 'width',
                'figsize', 'axis', 'format']
 

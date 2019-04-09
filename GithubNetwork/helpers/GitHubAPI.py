@@ -1,7 +1,7 @@
 '''
 file: GitHubAPI.py
 
-brief: Defines a wrapper class for the GitHub RESTful API. Handles all HTTPS 
+brief: Defines a wrapper class for the GitHub RESTful API. Handles all HTTPS
        requests and exception handling of those requests.
 
 https://github.com/AlexanderJDupree/GithubNetwork
@@ -43,8 +43,8 @@ def getFollowers(followers_url):
 
 class User:
 
-    ''' 
-    User class represents a GitHub user account. Holding data such as login, 
+    '''
+    User class represents a GitHub user account. Holding data such as login,
     id, and a list of followers/following
     '''
 

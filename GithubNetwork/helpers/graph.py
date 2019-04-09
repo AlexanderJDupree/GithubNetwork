@@ -1,7 +1,7 @@
 '''
 file: graph.py
 
-brief: Constructs the graph from the GithubAPI and utilizes networkx and 
+brief: Constructs the graph from the GithubAPI and utilizes networkx and
        matplotlib to draw and save the graph to a png file
 
 https://github.com/AlexanderJDupree/GithubNetwork
@@ -52,7 +52,7 @@ class GitHubNetwork:
 
         plt.figure(figsize=figsize)
 
-        nx.draw_networkx(self._graph, pos, node_color=node_color, node_size=node_size, 
+        nx.draw_networkx(self._graph, pos, node_color=node_color, node_size=node_size,
                          with_labels=labels, arrowsize=arrowsize, width=width)
 
         if(axis == False):
@@ -86,7 +86,6 @@ class GitHubNetwork:
             return #TODO helpful error message
 
         self._mapNetwork(user, self._diameter)
-	
         # Empty hash set of processed data
         self._processed.clear()
         return
@@ -94,7 +93,7 @@ class GitHubNetwork:
     def _mapNetwork(self, user, depth):
 
         if depth <= 0 or self._graph.number_of_nodes() >= self._maxNodes or user in self._processed:
-            return 
+            return
 
         self._addFollowers(user)
         self._addFollowing(user)
