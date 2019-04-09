@@ -80,7 +80,7 @@ class User:
         return self.login()
 
     def __eq__(self, other):
-        return self.id() == other.id()
+        return self.id() == other.id() if type(self) == type(other) else False
 
     def __hash__(self):
         return self.id()

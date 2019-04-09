@@ -32,11 +32,12 @@ def main():
             scale       = args['scale'],
             width       = args['width'],
             normalize   = args['normalize'],
-            colored     = args['colored'],
+            cmap        = args['colormap'],
             labels      = args['labels'],
             layout      = args['vis'],
             axis        = args['axis'],
-            figsize     = args['figsize']
+            figsize     = args['figsize'],
+            colorbar    = args['bar']
             )
 
     # Remove file extension if provided

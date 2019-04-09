@@ -12,6 +12,9 @@ VIS_LAYOUTS = ['spring', 'kamada-kawai', 'random', 'spectral', 'circular', 'shel
 
 FILE_FORMATS = [ 'graphml', 'pickle', 'adjacency_list', 'gexf', 'yaml', 'edge_list' ]
 
+COLOR_MAPS = ['rainbow', 'purples', 'greys', 'blues', 'greens', 'yellow-red', 
+              'spring', 'summer', 'cool', 'hot', 'gnuplot', 'twilight', 'coolwarm']
+
 def validateInteger(arg, lbound, ubound):
     value = int(arg)
     if value < lbound or value > ubound:
@@ -29,6 +32,7 @@ def validateMaxNodes(arg):
 def validateArrowSize(arg):
     return validateInteger(arg, 1, 20)
 
+# TODO Flags require an argument when they shouldn't.
 def parse(argv):
 
     parser = argparse.ArgumentParser(
@@ -95,13 +99,6 @@ def parse(argv):
             help="Normalize the size of each node. Default=False"
             )
     parser.add_argument(
-            '-c', '--colored',
-            type=bool,
-            metavar='',
-            default=True,
-            help="Scale colors by betweeness centrality factor. Default=True"
-            )
-    parser.add_argument(
             '-w', '--width', 
             type=float,
             metavar='',
@@ -123,6 +120,22 @@ def parse(argv):
             metavar='',
             default=False,
             help="Display graphs x/y axis. Default=False"
+            )
+    parser.add_argument(
+            '-b', '--bar',
+            type=bool,
+            metavar='',
+            default=False,
+            help="Add a colorbar to the table. Default=False"
+            )
+    parser.add_argument(
+            '-c', '--colormap',
+            metavar='',
+            choices=COLOR_MAPS,
+            default=COLOR_MAPS[0],
+            help="Color Mapping palette. Default=rainbow. Options: {}".format(
+                '\n'.join(COLOR_MAPS)
+                )
             )
     parser.add_argument(
             '--format',

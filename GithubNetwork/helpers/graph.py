@@ -35,6 +35,21 @@ class GitHubNetwork:
             'yaml'           : (nx.write_yaml, '.yaml'),
             'gexf'           : (nx.write_gexf, '.gexf')
             }
+    _colormaps = {
+            'rainbow'    : plt.cm.rainbow,
+            'purples'    : plt.cm.Purples,
+            'greys'      : plt.cm.Greys,
+            'blues'      : plt.cm.Blues,
+            'greens'     : plt.cm.Greens,
+            'yellow-red' : plt.cm.YlOrRd,
+            'spring'     : plt.cm.spring,
+            'summer'     : plt.cm.summer,
+            'cool'       : plt.cm.cool, 
+            'hot'        : plt.cm.hot, 
+            'gnuplot'    : plt.cm.gnuplot,
+            'twilight'   : plt.cm.twilight,
+            'coolwarm'   : plt.cm.coolwarm
+            }
     
     def __init__(self, diameter, maxNodes):
         self._diameter  = diameter
@@ -43,17 +58,30 @@ class GitHubNetwork:
         self._processed = set()
 
     def draw(self, output_file, arrowsize=10, scale=1.0, width=1.0, figsize=(20, 20),
-             normalize=False, colored=True, labels=True, axis=False, layout='spring'):
+             normalize=False, labels=True, axis=False, colorbar=True, layout='spring', 
+             cmap='rainbow'):
 
         pos = self._layouts[layout](self._graph)
 
-        node_color = self._nodeColor(colored)
+        node_color = self._nodeColor()
         node_size = self._nodeSize(normalize, scale)
+
+        cmap = self._colormaps[cmap]
+        vmin = min(node_color)
+        vmax = max(node_color)
 
         plt.figure(figsize=figsize)
 
+        # TODO this can take awhile, add progress update or a 'hang in there'
         nx.draw_networkx(self._graph, pos, node_color=node_color, node_size=node_size,
-                         with_labels=labels, arrowsize=arrowsize, width=width)
+                         cmap=cmap, vmin=vmin, vmax=vmax, with_labels=labels, 
+                         arrowsize=arrowsize, width=width)
+
+        if(colorbar == True):
+            sm = plt.cm.ScalarMappable(cmap=cmap,
+                                       norm=plt.Normalize(vmin=vmin, vmax=vmax))
+            sm._A = []
+            plt.colorbar(sm)
 
         if(axis == False):
             plt.axis('off')
@@ -61,10 +89,12 @@ class GitHubNetwork:
         plt.savefig(output_file, format="PNG")
         return
 
-    def _nodeColor(self, colored):
-        return [20000.0 * self._graph.degree(v) for v in self._graph] if colored else 'r'
+    def _nodeColor(self):
+        # TODO add different ways to represent color mapping
+        return [self._graph.degree(v) for v in self._graph]
 
     def _nodeSize(self, normalize, scale):
+        # TODO add different ways to represent node size mappings
         return int(300 * scale) if normalize else [v * 10100 for v in self._betCent().values()]
 
     def _betCent(self):
