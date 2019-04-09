@@ -13,7 +13,7 @@ The **GitHubNetwork** is a command line application that helps crawl and visuali
 
 ### Prerequisites
 
-First, GitHubNetwork requires [python3](https://www.python.org/downloads/) and *pip* to install and run the application. GitHubNetwork has been tested on python versions 3.6 and greater. Older versions may or may not work with GitHubNetwork. 
+GitHubNetwork requires [python3](https://www.python.org/downloads/) and *pip* to install and run the application. GitHubNetwork has been tested on python versions 3.6 and greater. Older versions may or may not work with GitHubNetwork. 
 
 The GitHub API limits unauthenticated users to 60 requests per hour. So if you plan on generating a sizeable graph you will need to provide your GitHub credentials. This is done with basic authentication and environment variables. Simply run the following lines in a terminal or store them in your .bash_profile (or wherever you store your environment variables).
 
@@ -44,7 +44,7 @@ Now you can run the application with:
 github-network some_username
 ```
 
-Note: The file *install.sh* will utilize *pip* to install the dependencies and install the application itself. This is done with the --user and -e flags, meaning that it should install into your /home/.local/bin in an editable format. If the command `github-network` is not found then /home/.local/bin is probably not in your $PATH.
+Note: The file *install.sh* will utilize *pip* to install the dependencies and install the application itself. This is done with the `--user` and `-e` flags, meaning that it should install into your /home/.local/bin in an editable format. If the command `github-network` is not found then /home/.local/bin is probably not in your $PATH.
 
 Also, if you don't want to install the application you can always use the *runner.py* file to execute the application directly from source like this:
 
@@ -58,7 +58,7 @@ In the future I plan to ship **GitHubNetwork** with [pypi](https://pypi.org/). A
 
 ### Usage 
 
-**GitHubNetwork** comes with quite a variety of options to specify the layout and format of your graph. The only required argument is a GitHub username, but options like arrowsize, output file format, coloring can all be identified. To get a full list of options run:
+**GitHubNetwork** comes with quite a variety of options to specify the layout and format of your graph. The only required argument is a GitHub username, but options like arrowsize, output file format, coloring can all be designated. To get a full list of options run:
 
 ```
 github-network --help
@@ -71,7 +71,7 @@ Here I am specifying a diameter of 6 with the max number of nodes to be 60, arra
 ```
 github-network alexanderjdupree -d 6 -m 60 -v circular --labels=true
 ```
-The previous command generated this image:
+This command generated this image:
 
 ![Circular layout with 60 Nodes](example/circular.png)
 
