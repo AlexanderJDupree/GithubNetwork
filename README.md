@@ -98,6 +98,9 @@ python -m unittest
 ```
 
 If 0 tests are ran, or there are failed imports then you are likely in the wrong folder. The unittest command should be run at the top level of the project directory
+## Contributing
+
+All are welcome to contribute to make GitHubNetwork even better! If you'd like to contribute code or have a feature request just raise an issue or email me and we can discuss it!
 
 ## Built With
 
