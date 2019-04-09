@@ -1,9 +1,17 @@
 from setuptools import setup, find_packages
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
         name = 'github-network',
         version = '1.0.0a',
         description='Visualize your GitHub social Network!',
+        long_description=long_description,
+        long_description_content_type='text/markdown',
         url='https://github.com/AlexanderJDupree/GithubNetwork',
         author='Alexander Dupree',
         author_email='alexanderjdupree@gmail.com',
