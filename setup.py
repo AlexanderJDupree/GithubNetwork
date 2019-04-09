@@ -26,7 +26,7 @@ setup(
         keywords='GitHub Social Network',
         packages = find_packages(),
         python_requires='>=3.5',
-        install_requires=['requests', 'matplotlib', 'networkx', 'numpy', 'PyYAML'],
+        install_requires=['requests', 'matplotlib', 'networkx', 'numpy', 'tqdm','PyYAML'],
         entry_points = {
             'console_scripts': [
                 'github-network = GithubNetwork.app:main'
