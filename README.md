@@ -3,6 +3,7 @@
 Visualize your GitHub social network as a directed graph!
 
 [![CircleCI](https://circleci.com/gh/AlexanderJDupree/GithubNetwork.svg?style=svg)](https://circleci.com/gh/AlexanderJDupree/GithubNetwork)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/664afc53dad245dbaa9d778652b2ce12)](https://www.codacy.com/app/AlexanderJDupree/GithubNetwork?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AlexanderJDupree/GithubNetwork&amp;utm_campaign=Badge_Grade)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AlexanderJDupree/GitHubNetwork/blob/master/LICENSE)
 
 ## Introduction
