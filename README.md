@@ -74,7 +74,7 @@ github-network alexanderjdupree -m 45 -v random -c coolwarm --labels=true --axis
 ```
 This command generated this image:
 
-![Circular layout with 60 Nodes](example/random.png)
+![Random Layout](example/random.png)
 
 Heres another example for 1000 nodes, an arrowsize of 5, line width of 60%, node sizes normalized, a figure size of 30 by 25, arranged by the kamada-kawai algorithm, with a color bar added for the twilight colormap.
 
@@ -84,11 +84,17 @@ github-network alexanderjdupree  -d 6 -m 1000 -v kamada-kawai -c twilight --arro
 
 Which results in this image:
 
-![Spring layout with 1000 Nodes](example/kamada.png)
+![Kamada Layout](example/kamada.png)
 
 As you can see, things can get messy very quick! That's why that along with the .png file the graph itself can be saved in a variety of formats. By default it is saved as 'network.graphml' and can be used in other visualization and analysis tools of your choosing. 
 
+Here are some other example outputs of the program as well:
+
+![Circular Layout](example/circular.png)
+![Spring Layout](example/spring.png)
+
 Currently, the node sizes are scaled by their betweeness centrality values and the color relates to the nodes degree. If you want to normalize all the node sizes you can run the app with the '--normalize=True' command. In the future I will add a variety of options to scale the node sizes/colorschemes.
+
 
 ## What's in this Repo?
 
