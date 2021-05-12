@@ -119,4 +119,4 @@ All are welcome to contribute to make GitHubNetwork even better! If you'd like t
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://raw.githubusercontent.com/AlexanderJDupree/GithubNetwork/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/AlexanderJDupree/GithubNetwork/blob/master/LICENSE) file for details
